@@ -1,6 +1,6 @@
 from django.db import models
-
 from .utils import code_generator, create_shortcode
+from .validators import validate_dot_com, validate_url
 
 class KirrUrlManager(models.Manager):
     def all(self, *args, **kwargs):
@@ -17,7 +17,7 @@ class KirrUrlManager(models.Manager):
         return "New codes made: {}".format(new_codes)
 
 class KirrUrl(models.Model):
-    url = models.CharField(max_length=220,)
+    url = models.CharField(max_length=220, validators=[validate_url, validate_dot_com])
     shortcode = models.CharField(max_length=128, unique=True, null=True, blank=True)
     update = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
