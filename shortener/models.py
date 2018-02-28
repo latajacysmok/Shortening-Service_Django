@@ -1,6 +1,8 @@
 from django.db import models
 from .utils import code_generator, create_shortcode
 from .validators import validate_dot_com, validate_url
+# from django.core.urlresolvers import reverse
+from django_hosts.resolvers import reverse
 
 class KirrUrlManager(models.Manager):
     def all(self, *args, **kwargs):
@@ -22,7 +24,6 @@ class KirrUrl(models.Model):
     update = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
-    #empty_datetime = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     objects = KirrUrlManager()
     some_random = KirrUrlManager()
@@ -34,3 +35,7 @@ class KirrUrl(models.Model):
 
     def __str__(self):
         return str(self.url)
+
+    def get_short_url(self):
+        url_path = reverse("scode", kwargs={'shortcode': self.shortcode}, host='www', scheme='http')
+        return url_path

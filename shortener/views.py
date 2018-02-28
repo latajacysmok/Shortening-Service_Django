@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from .models import KirrUrl
 from .forms import SubmitUrlForm
+from analytics.models import ClickEvent
+
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
@@ -35,8 +37,9 @@ class HomeView(View):
                 template = "shortener/alredy-exists.html"
         return render(request, template, context)
 
-class KirrCBView(View):
+class URLRedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
-        obj = get_object_or_404(KirrUrl, shortcode=shortcode)
+        obj = get_object_or_404(KirrUrl, shortcode__iexact=shortcode)
+        ClickEvent.objects.create_event(obj)
         return HttpResponseRedirect(obj.url)
 
