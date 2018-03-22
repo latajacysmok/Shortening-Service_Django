@@ -1,12 +1,22 @@
-<div style="algin-text: center; width: 800px; margin: 0 auto;">
-    <h1>Created</h1>
-    <p>{{ object.url }}</p>
+{% extends "base.html" %}
 
-    {% if object.clickevent %}
-        <p> Count {{ object.clickevent.count }} </p>
-    {% endif %}
+{% block title %}
+    {{ object.shortcode }} | {{ block.super }}
+{% endblock title %}
 
-    <p><a href="{{ object.get_short_url }}">{{ object.get_short_url }}</a></p>
-    <a href="/">+ New</a>
+{% block content %}
 
-</div>
+    <div style="algin-text: center; width: 800px; margin: 0 auto;">
+        <h1>Success!</h1>
+        <p>{{ object.url }}</p>
+
+        {% if object.clickevent %}
+            <p> Count {{ object.clickevent.count }} </p>
+        {% endif %}
+
+        <p><a href="{{ object.get_short_url }}">{{ object.get_short_url }}</a></p>
+        <a class='btn btn-default'  href="/">+ New</a>
+
+    </div>
+
+{% endblock content %}

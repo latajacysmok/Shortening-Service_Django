@@ -1,9 +1,19 @@
-<div style="width: 800px; margin: 0 auto;">
+{% extends "base.html" %}
 
-    <h1>{{ title }}</h1>
-    <form method="POST" action="."> {% csrf_token %}
-        <!--<input type="text" placeholder="url" />-->
-        {{ form.as_p }}
-        <input type="submit" value="Shorten" />
-    </form>
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="text-center col-sm-12">
+            <h1>{{ title }}</h1>
+            <div class="col-sm-4 col-sm-offset-2">
+                <form method="POST" action="."> {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class ='btn btn-primary' type="submit" value="Shorten" />
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+{% endblock content %}
